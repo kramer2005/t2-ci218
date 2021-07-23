@@ -8,7 +8,7 @@
 
 /**
  * @brief Verifica o algoritmo de visão equivalente
- * @param t - Primeira transação do escalonamento
+ * @param s - Escalonamento
  */
 bool isViewEquivalent(scaling *t);
 
