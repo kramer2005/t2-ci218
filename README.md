@@ -58,10 +58,12 @@ Para cada transação em $T_j$, é verificado se a última operação em $T_i$ a
 
 - Todas as transações começam com a propriedade ```viewed``` sendo 0
 - Cria-se uma variável que representa um iterador, iniciando em 1
-- Itera-se sobre todas as transações do escalonamento, sempre que é encontrado uma transação com a propriedade ```viewed``` igual a zero, adiciona-se 1 no iterador, seta-se o valor da aresta como o valor atual do iterador e segue-se todas as arestas da transação, quando a aresta conecta uma transação a outra com o mesmo valor na propriedade ```viewed```, significa que aquela transação já foi vista, logo se tem um ciclo.
+- Itera-se sobre todas as transações do escalonamento, sempre que é encontrado uma transação com a propriedade ```viewed``` igual a zero, adiciona-se 1 no iterador, seta-se o valor da aresta como o valor atual do iterador e segue-se todas as arestas da transação, setando o ```viewed``` igual ao valor do iterador sempre que se troca de novo, quando a aresta conecta uma transação a outra com o mesmo valor na propriedade ```viewed```, significa que aquela transação já foi vista, logo se tem um ciclo.
 - O escalonamento é serial se não existe ciclo no grafo.
 
-![alt text](https://github.com/kramer2005/escalona/blob/master/ciclo-grafo.jpg?raw=true)
+![alt text](https://github.com/kramer2005/t2-ci218/blob/master/ciclo-grafo.jpg?raw=true)
+
+Na imagem, o nodo amarelo é o que está atualmente sendo avaliado, o verde é o que já foi avaliado e o preto e branco nunca foi visto naquela iteração.
 
 ### Visão equivalente
 
@@ -70,5 +72,7 @@ Para cada transação em $T_j$, é verificado se a última operação em $T_i$ a
 - Duas informações principais são passadas recursivamente para a função que executa o algoritmo de visão equivalente
   - Quais são as transações sendo utilizadas na permutação
   - Quais são as propriedades que já foram lidas
-- Para cada transação
-
+- Para cada transação, é verificado se já está sendo utilizado na permutação, caso não esteja, é verificado se está fazendo uma escrita em um valor que já foi lido nas outras permutações (compara-se cada escrita da transação com as leituras feitas anteriormente), bem como adiciona as propriedades que são lidas naquela transação a lista de propriedades lidas, que é passada recursivamente para a próxima execução da função.
+- Caso todas as transações estejam sendo utilizadas na permutação, então é verificado se a última transação da permutação (ou visão) é escrita, caso seja uma leitura e a última operação do escalonamento seja uma escrita, retorna-se falso, caso contrario, verdadeiro.
+- Sempre que é encontrado uma escrita de valor após o mesmo valor ter sido lido, retorna-se falso.
+- Se o algoritmo retorna verdadeiro, existe visão equivalente, caso contrário, não.

@@ -31,6 +31,13 @@ op findLastInputOP(transaction *t)
     return lastInput->operation;
 }
 
+/**
+ * @brief Adiciona um valor a lista de valores lidos
+ * 
+ * @param r - Lista de valores lidos
+ * @param value - Valor a ser adicionado
+ * @return readen* 
+ */
 readen *addToReaden(readen *r, char value)
 {
     if (r == NULL)
@@ -46,6 +53,13 @@ readen *addToReaden(readen *r, char value)
     return r;
 }
 
+/**
+ * @brief Determina se um valor já foi lido
+ * 
+ * @param r - lista de valores lidos
+ * @param value - valor a ser verificado
+ * @param lastReaden - último valor válido
+ */
 bool wasReaden(readen *r, char value, readen *lastReaden)
 {
     if (r == NULL)
@@ -139,6 +153,11 @@ bool detectViewEquivalent(transaction *t, transaction *arr[], size_t used, reade
     return true;
 }
 
+/**
+ * @brief Remove os commits que não são mais necessários
+ * 
+ * @param t - Primeira transação do escalonamento
+ */
 void removeCommit(transaction *t)
 {
     while (t != NULL)
